@@ -7,9 +7,9 @@ a{
     text-decoration: none;
     color: inherit;
 }
-.app{
+.app {
     min-height: 100vh;
-    color: white;
-    background: linear-gradient(#91389f,#362167,#7e44d0);
-
+    color: #E1E1E1; /* Soft White */
+    background: linear-gradient(#1A1A40, #2C2C54, #464866); /* Dark Blue Gradient */
+    font-family: 'Arial', sans-serif;
 }
