@@ -1,0 +1,112 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 8%;
+    margin: auto;
+    background-color: #FFFFFF; /* Dark background for better contrast */
+    color: #2563EB;
+    font-family: Arial, sans-serif;
+    /* font-size: 16px; */
+}
+
+.navbar .logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #2563EB;
+    font-weight: bold;
+    font-size: 40px;
+    gap: 10px;
+    
+}
+
+.navbar .logo img {
+    width: 60px;
+    height: 60px;
+}
+
+.navbar ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 25px;
+
+    /* Add this to move the <ul> closer to the right side */
+    margin-left: auto;
+    margin-right: 15px; /* Optional: add spacing between <ul> and the nav-right section */
+}
+
+.navbar ul li {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    border-radius: 6px;
+    border: 1px solid #2563EB;
+    padding: 5px 10px;
+}
+
+.navbar ul li:hover {
+    background-color: #2563EB;
+    color: #FFFFFF;
+    border: 1px solid #2563EB;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+}
+
+.nav-right select {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #2563EB;
+    background: #fff; 
+    color: #2563EB;
+    font-size: 25px;
+    cursor: pointer;
+    appearance: none; 
+}
+
+.nav-right select option {
+    background-color: #FFFFFF;
+    color: #2563EB;
+    cursor: pointer;
+}
+.nav-right select:hover {
+    background-color: #2563EB;
+    color: #FFFFFF;
+    border: 1px solid #2563EB;
+    
+
+}
+
+.nav-right button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #2563EB;
+    border: none;
+    cursor: pointer;
+    /*  */
+}
+
+.nav-right button:hover {
+    background-color: #FFFFFF;
+    color: #2563EB;
+    border: 1px solid #2563EB;
+
+}
+
+.nav-right button img {
+    width: 14px;
+    height: auto;
+}

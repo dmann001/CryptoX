@@ -1,0 +1,138 @@
+.home {
+  padding-top: 100px;
+  padding-bottom: 200px;
+  background-color: #2563eb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 40px; /* Added spacing between hero and table */
+}
+
+.hero {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.hero h1 {
+  font-size: max(4vw, 50px);
+  color: #ffffff;
+  margin: 0;
+}
+
+.hero p {
+  width: 100%;
+  max-width: 500px;
+  font-size: 20px;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+.hero form {
+  padding: 15px;
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero input {
+  flex: 1;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.hero input::placeholder {
+  color: #aaa;
+}
+
+.hero button {
+  background-color: #2563eb;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hero button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.hero button img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+.crypto-table {
+    max-width: 800px;
+    width: 90%;
+    margin: auto;
+    background: linear-gradient(145deg, #2563eb, #1d4ed8);   
+    border-radius: 10px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+  }
+  
+  .table-layout {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr; /* Ensure enough space for all columns */
+    padding: 15px 20px;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid #3c3c3c;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .table-layout p {
+    margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+    padding: 10px; /* Added padding for consistency */
+    border: 1px solid transparent; /* Transparent border to avoid resizing on hover */
+    border-radius: 15px; /* Default border-radius to avoid shifting */
+    box-sizing: border-box; /* Ensures padding and border are included in the element's size */
+  }
+  
+  .table-layout p:hover {
+    background-color: #ffffff;
+    color: #2563eb;
+    border-color: #2563eb; /* Only changes the color of the existing border */
+  }
+  .table-layout:last-child{
+    border: none;
+  }
+  .table-layout div{
+    display: flex;
+    align-items: center;
+    gap:10px;
+  }
+
+  .table-layout div img{
+    width: 35px;
+  }
+  .table-layout p.market-cap {
+    text-align: center; /* Aligns market cap values to the right */
+  }
+  .table-layout p:nth-child(4) {
+    white-space: nowrap; /* Prevents the 24h column from wrapping and being pushed */
+  }
