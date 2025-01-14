@@ -4,7 +4,7 @@
     justify-content: space-between;
     padding: 15px 8%;
     margin: auto;
-    background-color: #FFFFFF; /* Dark background for better contrast */
+    background-color: #FFFFFF;
     color: #2563EB;
     font-family: Arial, sans-serif;
     /* font-size: 16px; */
@@ -33,10 +33,8 @@
     margin: 0;
     padding: 0;
     font-size: 25px;
-
-    /* Add this to move the <ul> closer to the right side */
     margin-left: auto;
-    margin-right: 15px; /* Optional: add spacing between <ul> and the nav-right section */
+    margin-right: 15px; 
 }
 
 .navbar ul li {

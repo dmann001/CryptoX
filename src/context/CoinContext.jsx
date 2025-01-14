@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const CoinContext = createContext();
 
 const CoinContextProvider = ({ children }) => {
-  const apiKey = import.meta.env.VITE_API_KEY; // Reference the API key here
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   const [allCoin, setAllCoin] = useState([]);
   const [currency, setCurrency] = useState({
@@ -17,7 +17,7 @@ const CoinContextProvider = ({ children }) => {
         method: "GET",
         headers: {
           accept: "application/json",
-          "x-cg-demo-api-key": apiKey, // Ensure the API key is needed
+          "x-cg-demo-api-key": apiKey,
         },
       };
 
