@@ -1,9 +1,9 @@
 # CryptoX - Real-Time Cryptocurrency Tracker
 
 ## Overview
-CryptoX is a live cryptocurrency tracking website that provides real-time data for the top 10 cryptocurrencies. Built with Vite and React, it offers a clean interface to monitor cryptocurrency prices and market trends using the CoinGecko API.
+CryptoX is a live cryptocurrency tracking website that provides real-time data for the top 10 cryptocurrencies. Built with Vite and React, it offers a clean interface to monitor cryptocurrency prices and market trends using the CoinGecko API. I'm currently making changes to the mobile-ui and further search functionalities.
 
-🚀 **Live Demo**: [CryptoX](https://cryptoxcoin.vercel.app/)
+🚀 **Live Demo**: [CryptoX](https://cryptoxcoin.vercel.app/): https://cryptoxcoin.vercel.app/
 
 ## Features
 * Real-time tracking of top 10 cryptocurrencies
@@ -16,7 +16,7 @@ CryptoX is a live cryptocurrency tracking website that provides real-time data f
 * React JS
 * Vite
 * CoinGecko API
-* CSS/SCSS (assuming based on common practices)
+* CSS
 * Vercel (for deployment)
 
 ## Installation
