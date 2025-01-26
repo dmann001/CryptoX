@@ -1,3 +1,4 @@
+/* General Navbar Styles */
 .navbar {
     display: flex;
     align-items: center;
@@ -7,7 +8,6 @@
     background-color: #FFFFFF;
     color: #2563EB;
     font-family: Arial, sans-serif;
-    /* font-size: 16px; */
 }
 
 .navbar .logo a {
@@ -18,7 +18,6 @@
     font-weight: bold;
     font-size: 40px;
     gap: 10px;
-    
 }
 
 .navbar .logo img {
@@ -26,6 +25,7 @@
     height: 60px;
 }
 
+/* Desktop Menu */
 .navbar ul {
     display: flex;
     gap: 30px;
@@ -34,7 +34,7 @@
     padding: 0;
     font-size: 25px;
     margin-left: auto;
-    margin-right: 15px; 
+    margin-right: 15px;
 }
 
 .navbar ul li {
@@ -55,18 +55,17 @@
     display: flex;
     align-items: center;
     gap: 15px;
-
 }
 
 .nav-right select {
     padding: 5px 10px;
     border-radius: 6px;
     border: 1px solid #2563EB;
-    background: #fff; 
+    background: #fff;
     color: #2563EB;
     font-size: 25px;
     cursor: pointer;
-    appearance: none; 
+    appearance: none;
 }
 
 .nav-right select option {
@@ -74,12 +73,11 @@
     color: #2563EB;
     cursor: pointer;
 }
+
 .nav-right select:hover {
     background-color: #2563EB;
     color: #FFFFFF;
     border: 1px solid #2563EB;
-    
-
 }
 
 .nav-right button {
@@ -94,17 +92,145 @@
     background: #2563EB;
     border: none;
     cursor: pointer;
-    /*  */
 }
 
 .nav-right button:hover {
     background-color: #FFFFFF;
     color: #2563EB;
     border: 1px solid #2563EB;
-
 }
 
 .nav-right button img {
     width: 14px;
     height: auto;
+}
+
+/* Hamburger Menu Button */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #2563EB;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* Coming Soon Message */
+.coming-soon-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #eb2525;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 5%;
+        position: relative;
+    }
+
+    .navbar .logo {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar .logo a {
+        font-size: 30px;
+    }
+
+    .navbar .logo img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .nav-menu {
+        display: none;
+        width: 100%;
+    }
+
+    .nav-menu.active {
+        display: block;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        margin: 15px 0;
+        font-size: 20px;
+    }
+
+    .navbar ul li {
+        text-align: center;
+        padding: 12px;
+        margin: 5px 0;
+        border: 1px solid #2563EB;
+        border-radius: 6px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .nav-right {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .nav-right select {
+        width: 20%;
+        font-size: 18px;
+        padding: 12px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+
+    .nav-right button {
+        width: 100%;
+        justify-content: center;
+        font-size: 18px;
+        padding: 12px 20px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+
+    .coming-soon-message {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
 }

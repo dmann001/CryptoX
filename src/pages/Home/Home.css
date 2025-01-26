@@ -1,4 +1,15 @@
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Home container */
 .home {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   padding-top: 100px;
   padding-bottom: 200px;
   background-color: #2563eb;
@@ -7,11 +18,13 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  gap: 40px; /* Added spacing between hero and table */
+  gap: 40px;
 }
 
+/* Hero section */
 .hero {
   max-width: 600px;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -24,6 +37,8 @@
   font-size: max(4vw, 50px);
   color: #ffffff;
   margin: 0;
+  line-height: 1.2;
+  width: 100%;
 }
 
 .hero p {
@@ -34,6 +49,7 @@
   line-height: 1.6;
 }
 
+/* Search form */
 .hero form {
   padding: 15px;
   width: 100%;
@@ -83,56 +99,139 @@
   height: 20px;
   filter: invert(1);
 }
+
+/* Crypto table */
 .crypto-table {
-    max-width: 800px;
-    width: 90%;
-    margin: auto;
-    background: linear-gradient(145deg, #2563eb, #1d4ed8);   
-    border-radius: 10px;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
-  }
-  
-  .table-layout {
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr; /* Ensure enough space for all columns */
-    padding: 15px 20px;
-    align-items: center;
-    text-align: center;
-    border-bottom: 1px solid #3c3c3c;
-    font-size: 18px;
-    font-weight: 600;
-  }
-  
-  .table-layout p {
-    margin: 0;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
-    padding: 10px; /* Added padding for consistency */
-    border: 1px solid transparent; /* Transparent border to avoid resizing on hover */
-    border-radius: 15px; /* Default border-radius to avoid shifting */
-    box-sizing: border-box; /* Ensures padding and border are included in the element's size */
-  }
-  
-  .table-layout p:hover {
-    background-color: #ffffff;
-    color: #2563eb;
-    border-color: #2563eb; /* Only changes the color of the existing border */
-  }
-  .table-layout:last-child{
-    border: none;
-  }
-  .table-layout div{
-    display: flex;
-    align-items: center;
-    gap:10px;
+  max-width: 800px;
+  width: 90%;
+  margin: auto;
+  background: linear-gradient(145deg, #2563eb, #1d4ed8);
+  border-radius: 10px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.table-layout {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr;
+  padding: 15px 20px;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid #3c3c3c;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.table-layout p {
+  margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+.table-layout p:hover {
+  background-color: #ffffff;
+  color: #2563eb;
+  border-color: #2563eb;
+}
+
+.table-layout:last-child {
+  border: none;
+}
+
+.table-layout div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-layout div img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.table-layout p.market-cap {
+  text-align: center;
+}
+
+.table-layout p:nth-child(4) {
+  white-space: nowrap;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .home {
+      padding-top: 70px;
+      padding-bottom: 100px;
   }
 
-  .table-layout div img{
-    width: 35px;
+  .hero {
+      padding: 0 15px;
   }
-  .table-layout p.market-cap {
-    text-align: center; /* Aligns market cap values to the right */
+
+  .hero h1 {
+      font-size: 32px;
   }
-  .table-layout p:nth-child(4) {
-    white-space: nowrap; /* Prevents the 24h column from wrapping and being pushed */
+
+  .hero p {
+      font-size: 16px;
   }
+
+  .hero form {
+      padding: 10px;
+  }
+
+  .hero input {
+      font-size: 14px;
+  }
+
+  .crypto-table {
+      width: 95%;
+  }
+
+  .table-layout {
+      grid-template-columns: 0.3fr 1.5fr 1fr 0.8fr 1.2fr;
+      padding: 10px;
+      font-size: 14px;
+      gap: 5px;
+  }
+
+  .table-layout div {
+      gap: 5px;
+  }
+
+  .table-layout div img {
+      width: 25px;
+      height: 25px;
+  }
+
+  .table-layout p {
+      padding: 5px;
+      font-size: 12px;
+  }
+}
+
+/* Additional mobile optimizations for very small screens */
+@media (max-width: 480px) {
+  .table-layout {
+      font-size: 12px;
+      padding: 8px 5px;
+  }
+
+  .table-layout div img {
+      width: 20px;
+      height: 20px;
+  }
+
+  .hero h1 {
+      font-size: 28px;
+  }
+
+  .hero p {
+      font-size: 14px;
+  }
+}
