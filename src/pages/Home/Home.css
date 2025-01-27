@@ -1,4 +1,3 @@
-/* Base styles */
 * {
   margin: 0;
   padding: 0;
@@ -161,6 +160,14 @@
 .table-layout p:nth-child(4) {
   white-space: nowrap;
 }
+.table-layout .green {
+  color: #00D515;
+  text-align: center;
+}
+.table-layout .red {
+  color: #ff4646;
+  text-align: center;
+}
 
 /* Mobile responsive styles */
 @media (max-width: 768px) {
@@ -172,7 +179,6 @@
   .hero {
       padding: 0 15px;
   }
-
   .hero h1 {
       font-size: 32px;
   }
@@ -194,11 +200,12 @@
   }
 
   .table-layout {
-      grid-template-columns: 0.3fr 1.5fr 1fr 0.8fr 1.2fr;
-      padding: 10px;
-      font-size: 14px;
-      gap: 5px;
-  }
+    grid-template-columns: 0.3fr 1.5fr 1fr 0.8fr 1.2fr;
+    padding: 12px 10px;
+    font-size: 14px;
+    gap: 5px;
+}
+
 
   .table-layout div {
       gap: 5px;
@@ -213,14 +220,8 @@
       padding: 5px;
       font-size: 12px;
   }
-  .table-layout .green {
-    color: #00D515;
-    text-align: center;
-  }
-  .table-layout .red {
-    color: #ff4646;
-    text-align: center;
-  }
+  
+  
 }
 
 /* Additional mobile optimizations for very small screens */
