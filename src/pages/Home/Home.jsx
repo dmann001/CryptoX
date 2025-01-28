@@ -37,6 +37,11 @@ const Home = () => {
       // For numbers less than 1 but greater than 0.01, show up to 4 decimal places
       return price.toFixed(4);
     }
+    if (price < 10) {
+      // For numbers less than 1 but greater than 0.01, show up to 4 decimal places
+      return price.toFixed(2);
+    }
+
     // For numbers >= 1, round to the nearest whole number and return without decimals
     return Math.round(price).toLocaleString();
   }
