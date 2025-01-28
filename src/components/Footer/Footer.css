@@ -1,0 +1,18 @@
+.Footer {
+    width: 100%;
+    padding: 20px 8%;
+    background: #2563EB;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Footer p {
+    margin: 0;
+    padding: 10px;
+    border-radius: 15px;
+}
+

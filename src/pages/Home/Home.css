@@ -165,7 +165,7 @@
   text-align: center;
 }
 .table-layout .red {
-  color: #ff4646;
+  color: #eb2525;
   text-align: center;
 }
 
@@ -200,7 +200,7 @@
   }
 
   .table-layout {
-    grid-template-columns: 0.3fr 1.5fr 1fr 0.8fr 1.2fr;
+    grid-template-columns: 0.2fr 0.6fr 0.5fr 0.5fr;
     padding: 12px 10px;
     font-size: 14px;
     gap: 5px;
@@ -219,6 +219,9 @@
   .table-layout p {
       padding: 5px;
       font-size: 12px;
+  }
+  .market-cap {
+    display: none;
   }
   
   
