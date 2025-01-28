@@ -197,6 +197,9 @@
 
   .crypto-table {
       width: 95%;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      max-height: 500px;
   }
 
   .table-layout {

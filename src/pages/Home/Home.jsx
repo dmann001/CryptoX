@@ -38,11 +38,10 @@ const Home = () => {
       return price.toFixed(4);
     }
     if (price < 10) {
-      // For numbers less than 1 but greater than 0.01, show up to 4 decimal places
       return price.toFixed(2);
     }
 
-    // For numbers >= 1, round to the nearest whole number and return without decimals
+    // For numbers >= 10, round to the nearest whole number and return without decimals
     return Math.round(price).toLocaleString();
   }
 
@@ -83,7 +82,7 @@ const Home = () => {
           <p style={{textAlign: "center"}}>24h</p>
           <p className='market-cap'>Market Cap</p>
         </div>
-        {displayCoin.slice(0,10).map((item, index) => (
+        {displayCoin.slice(0,20).map((item, index) => (
           <div className="table-layout" key={index}>
             <p>{item.market_cap_rank}</p>
             <div>
