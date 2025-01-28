@@ -40,6 +40,7 @@ To run this project locally:
 
 **Contributing**
 Feel free to fork this project and submit pull requests. As this is a personal project, I'm open to suggestions and improvements from the community.
+
 **Future Enhancements**
 
 Mobile-first UI redesign
