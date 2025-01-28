@@ -22,7 +22,7 @@ const CoinContextProvider = ({ children }) => {
       };
 
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}`,
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}&per_page=250`,
         options
       );
 
@@ -38,12 +38,12 @@ const CoinContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    let isMounted = true; // Flag to track component mounting
+    let isMounted = true;
 
     fetchAllCoin();
 
     return () => {
-      isMounted = false; // Cleanup function
+      isMounted = false;
     };
   }, [currency]);
 
