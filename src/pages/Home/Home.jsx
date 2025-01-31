@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Uparrow from '../../assets/up-arrow.png';
 import './Home.css';
 import { CoinContext } from '../../context/CoinContext';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const { allCoin, currency } = useContext(CoinContext);
@@ -37,7 +38,7 @@ const Home = () => {
       // For numbers less than 1 but greater than 0.01, show up to 4 decimal places
       return price.toFixed(4);
     }
-    if (price < 10) {
+    if (price < 100) {
       return price.toFixed(2);
     }
 
@@ -83,7 +84,7 @@ const Home = () => {
           <p className='market-cap'>Market Cap</p>
         </div>
         {displayCoin.slice(0,20).map((item, index) => (
-          <div className="table-layout" key={index}>
+          <Link to={`/coin/${item.id}`}className="table-layout" key={index}>
             <p>{item.market_cap_rank}</p>
             <div>
               <img src={item.image} alt="" />
@@ -94,7 +95,7 @@ const Home = () => {
               {Math.floor(item.price_change_percentage_24h * 100) / 100}%
             </p>
             <p className="market-cap">{currency.symbol}{item.market_cap.toLocaleString()}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
