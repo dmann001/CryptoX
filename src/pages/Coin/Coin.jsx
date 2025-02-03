@@ -42,6 +42,9 @@ const Coin = () => {
       .then(res => setHistoricalData(res))
       .catch(err => console.error(err));
   };
+  
+  
+  
 
   useEffect(() => {
     fetchCoinData();
@@ -104,6 +107,13 @@ const Coin = () => {
       <strong>Market Cap:</strong> {currency.symbol} {coinData.market_data.market_cap[currency.name].toLocaleString()}
     </div>
     <div className="market-item">
+      <strong>24 Hour High:</strong> {currency.symbol} {coinData.market_data.high_24h[currency.name].toLocaleString()}
+    </div>
+    <div className="market-item">
+      <strong>24 Hour Low:</strong> {currency.symbol} {coinData.market_data.low_24h[currency.name].toLocaleString()}
+    </div>
+   
+    <div className="market-item">
       <strong>Fully Diluted Valuation:</strong> {currency.symbol} {coinData.market_data.fully_diluted_valuation[currency.name].toLocaleString()}
     </div>
     <div className="market-item">
@@ -130,16 +140,24 @@ const Coin = () => {
         <LineChart historicalData={historicalData} />
       </div>
 
+
       {/* Key Info Grid */}
       <div className="info-grid">
-        <div className="info-card">
-          <h3>Technical Info</h3>
-          <div className="info-content">
-            <p><strong>Hash Algorithm:</strong> {coinData.hashing_algorithm}</p>
-            <p><strong>Block Time:</strong> {coinData.block_time_in_minutes} minutes</p>
-            <p><strong>Genesis Date:</strong> {new Date(coinData.genesis_date).toLocaleDateString()}</p>
-          </div>
-        </div>
+  <div className="info-card">
+    <h3>Technical Info</h3>
+    <div className="info-content">
+      <p><strong>Hash Algorithm:</strong> {coinData.hashing_algorithm}</p>
+      <p><strong>Block Time:</strong> {coinData.block_time_in_minutes} minutes</p>
+      <p>
+        <strong>Genesis Date:</strong>{' '}
+        {coinData.genesis_date
+          ? new Date(coinData.genesis_date).toLocaleDateString()
+          : 'N.A'}
+      </p>
+    </div>
+  </div>
+
+
 
         <div className="info-card">
           <h3>Categories</h3>

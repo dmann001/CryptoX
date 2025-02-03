@@ -36,15 +36,25 @@ const Home = () => {
     }
     if (price < 1) {
       // For numbers less than 1 but greater than 0.01, show up to 4 decimal places
+      return price.toFixed(5);
+    }
+    if (price < 10) {
+      // For numbers less than 1 but greater than 0.01, show up to 4 decimal places
       return price.toFixed(4);
     }
     if (price < 100) {
+      return price.toFixed(3);
+    }
+    if (price < 1000) {
+      return price.toFixed(2);
+    }
+    if (price < 10000) {
       return price.toFixed(2);
     }
 
-    // For numbers >= 10, round to the nearest whole number and return without decimals
     return Math.round(price).toLocaleString();
   }
+  //100,000
 
   useEffect(() => {
     setDisplayCoin(allCoin);
