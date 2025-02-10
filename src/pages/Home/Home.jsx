@@ -3,11 +3,17 @@ import Uparrow from '../../assets/up-arrow.png';
 import './Home.css';
 import { CoinContext } from '../../context/CoinContext';
 import { Link } from 'react-router-dom';
+import { inject } from '@vercel/analytics';
+
+
 
 const Home = () => {
   const { allCoin, currency } = useContext(CoinContext);
   const [displayCoin, setDisplayCoin] = useState([]);
   const [input, setInput] = useState('');
+  useEffect(() => {
+    inject();
+  }, []);
 
   const inputHandler = (event) => {
     setInput(event.target.value);

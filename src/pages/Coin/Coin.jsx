@@ -7,6 +7,8 @@ import LineChart from '../../components/LineChart/LineChart';
 import { ExternalLink, Github, Twitter, MessageCircle } from 'lucide-react';
 import { BsTwitterX} from "react-icons/bs";
 import { FaExternalLinkAlt, FaGithub  } from "react-icons/fa";
+import { inject } from '@vercel/analytics';
+
 
 
 const Coin = () => {
@@ -15,6 +17,11 @@ const Coin = () => {
   const [historicalData, setHistoricalData] = useState();
   const { currency } = useContext(CoinContext);
   const apiKey = import.meta.env.VITE_API_KEY;
+
+   useEffect(() => {
+      inject();
+    }, []);
+  
 
   const fetchCoinData = async () => {
     const options = {
