@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div>
       <p className='Footer'>
-      Copyright (c) 2025 CryptoXCoin by Dhruv Mann)
+      Copyright (c) 2025 CryptoXCoin by Dhruv Mann
       </p>
     </div>
   )
