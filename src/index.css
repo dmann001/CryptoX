@@ -11,10 +11,8 @@ a{
   text-decoration: none;
   color: inherit;
 }
-.app{
+.app {
   min-height: 100vh;
   color: #FFFFFF;
-  background: linear-gradient(120deg, #FFFFFF,#ced6df,#FFFFFF);
-
-
+  background:  #2563EB;
 }
