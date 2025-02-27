@@ -38,7 +38,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="logo">
-        <a href="/"><img src={logo} alt="" />CryptoX</a>
+        <a href="/"><img src={logo} alt="" />CryptoXCoin</a>
         <button 
           className="menu-toggle" 
           onClick={toggleMenu}
