@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative; /* Add this to fix at bottom */
   bottom: 0; /* Position at bottom */
   left: 0; /* Align to left edge */
 }

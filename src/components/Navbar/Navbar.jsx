@@ -19,6 +19,10 @@ const Navbar = () => {
         setCurrency({ name: 'cad', symbol: 'CA$' });
         break;
       }
+      case 'inr': {
+        setCurrency({ name: 'inr', symbol: 'INR' });
+        break;
+      }
       default: {
         setCurrency({ name: 'usd', symbol: '$' });
         break;
@@ -62,6 +66,7 @@ const Navbar = () => {
           <select onChange={currencyHandler}>
             <option value="usd">USD</option>
             <option value="cad">CAD</option>
+            <option value="inr">INR</option>
           </select>
           <div className="signup-container">
             <button onClick={handleSignupClick}>
