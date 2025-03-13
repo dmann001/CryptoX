@@ -2,8 +2,8 @@
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  margin: 0px 0;
+  padding: 32px;
+  margin: 24px 0;
   min-height: 600px;
   display: flex;
   flex-direction: column;
@@ -19,27 +19,38 @@
 
 .chart-controls-wrapper {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .chart-controls {
   display: flex;
-  gap: 40px;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 24px;
   padding: 0;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.chart-button {
-  padding: 16px 32px;
-  border: 3px solid #e5e7eb;
+.chart-type-controls,
+.time-range-controls,
+.scale-controls {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.chart-button,
+.time-range-button,
+.scale-button {
+  padding: 12px 24px;
+  border: 2px solid #e5e7eb;
   background-color: white;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 200px;
+  min-width: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,32 +59,40 @@
 }
 
 .button-text {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: #4b5563;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.5px;
   transition: all 0.3s ease;
 }
 
-.chart-button:hover {
+.chart-button:hover,
+.time-range-button:hover,
+.scale-button:hover {
   background-color: #f8fafc;
   border-color: #2563eb;
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
 }
 
-.chart-button:hover .button-text {
+.chart-button:hover .button-text,
+.time-range-button:hover .button-text,
+.scale-button:hover .button-text {
   color: #2563eb;
 }
 
-.chart-button.active {
+.chart-button.active,
+.time-range-button.active,
+.scale-button.active {
   background-color: #2563eb;
   border-color: #2563eb;
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
-.chart-button.active .button-text {
+.chart-button.active .button-text,
+.time-range-button.active .button-text,
+.scale-button.active .button-text {
   color: white;
 }
 
@@ -85,44 +104,52 @@
 }
 
 @media (max-width: 1024px) {
-  .chart-controls {
-    gap: 24px;
+  .chart-container {
+    padding: 24px;
   }
 
-  .chart-button {
-    min-width: 160px;
-    padding: 14px 24px;
+  .chart-controls {
+    gap: 16px;
+  }
+
+  .chart-button,
+  .time-range-button,
+  .scale-button {
+    min-width: 100px;
+    padding: 10px 20px;
   }
 
   .button-text {
-    font-size: 20px;
+    font-size: 14px;
   }
 }
 
 @media (max-width: 768px) {
   .chart-container {
-    padding: 20px;
+    padding: 16px;
     min-height: 500px;
   }
 
-  .chart-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-
   .chart-controls {
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .chart-button {
-    min-width: 140px;
-    padding: 12px 20px;
+  .chart-type-controls,
+  .time-range-controls,
+  .scale-controls {
+    gap: 8px;
+  }
+
+  .chart-button,
+  .time-range-button,
+  .scale-button {
+    min-width: 80px;
+    padding: 8px 16px;
   }
 
   .button-text {
-    font-size: 16px;
-    letter-spacing: 1px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
   }
 
   .chart-wrapper {

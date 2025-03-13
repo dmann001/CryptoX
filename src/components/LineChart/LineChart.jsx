@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,12 +9,16 @@ import {
   Tooltip,
   Legend,
   TimeScale,
+  LogarithmicScale,
+  Filler,
 } from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'react-chartjs-2';
 import { CandlestickController, CandlestickElement, OhlcController, OhlcElement } from 'chartjs-chart-financial';
 import 'chartjs-adapter-date-fns';
-import { format } from 'date-fns';
+import { format, subDays, subMonths, subYears } from 'date-fns';
+import { CoinContext } from '../../context/CoinContext';
 import './LineChart.css';
 
 ChartJS.register(
@@ -29,7 +33,10 @@ ChartJS.register(
   CandlestickController,
   CandlestickElement,
   OhlcController,
-  OhlcElement
+  OhlcElement,
+  zoomPlugin,
+  LogarithmicScale,
+  Filler
 );
 
 const ChartTypes = {
@@ -37,9 +44,78 @@ const ChartTypes = {
   CANDLESTICK: 'candlestick'
 };
 
-const LineChart = ({ historicalData }) => {
+const TimeRanges = {
+  DAY: '24h',
+  WEEK: '1w',
+  MONTH: '1m',
+  THREE_MONTHS: '3m',
+  SIX_MONTHS: '6m',
+  YEAR: '1y'
+};
+
+const LineChart = ({ historicalData, onTimeRangeChange }) => {
   const [chartData, setChartData] = useState(null);
   const [chartType, setChartType] = useState(ChartTypes.LINE);
+  const [timeRange, setTimeRange] = useState(TimeRanges.DAY);
+  const { currency } = useContext(CoinContext);
+
+  const getDaysFromRange = (range) => {
+    switch (range) {
+      case TimeRanges.DAY:
+        return 1;
+      case TimeRanges.WEEK:
+        return 7;
+      case TimeRanges.MONTH:
+        return 30;
+      case TimeRanges.THREE_MONTHS:
+        return 90;
+      case TimeRanges.SIX_MONTHS:
+        return 180;
+      case TimeRanges.YEAR:
+        return 365;
+      default:
+        return 1;
+    }
+  };
+
+  const handleTimeRangeChange = (range) => {
+    setTimeRange(range);
+    const days = getDaysFromRange(range);
+    onTimeRangeChange(days);
+  };
+
+  const getFilteredData = (data, range) => {
+    if (!data?.prices) return null;
+    const now = new Date();
+    let startDate;
+
+    switch (range) {
+      case TimeRanges.DAY:
+        startDate = subDays(now, 1);
+        break;
+      case TimeRanges.WEEK:
+        startDate = subDays(now, 7);
+        break;
+      case TimeRanges.MONTH:
+        startDate = subMonths(now, 1);
+        break;
+      case TimeRanges.THREE_MONTHS:
+        startDate = subMonths(now, 3);
+        break;
+      case TimeRanges.SIX_MONTHS:
+        startDate = subMonths(now, 6);
+        break;
+      case TimeRanges.YEAR:
+        startDate = subYears(now, 1);
+        break;
+      default:
+        return data.prices;
+    }
+
+    // Convert timestamps to numbers for comparison
+    const startTimestamp = startDate.getTime();
+    return data.prices.filter(item => item[0] >= startTimestamp);
+  };
 
   // Function to format OHLC data
   const formatCandlestickData = (data) => {
@@ -55,18 +131,20 @@ const LineChart = ({ historicalData }) => {
 
   useEffect(() => {
     if (historicalData?.prices) {
-      if (chartType === ChartTypes.LINE) {
-      const labels = historicalData.prices.map(item =>
-          format(new Date(item[0]), 'MMM d')
-      );
-      const prices = historicalData.prices.map(item => item[1]);
+      const filteredData = getFilteredData(historicalData, timeRange);
+      if (!filteredData) return;
 
-      setChartData({
-        labels,
-        datasets: [
-          {
-            label: 'Price Trend',
-            data: prices,
+      if (chartType === ChartTypes.LINE) {
+        const formattedData = filteredData.map(item => ({
+          x: new Date(item[0]).getTime(),
+          y: item[1]
+        }));
+
+        setChartData({
+          datasets: [
+            {
+              label: 'Price Trend',
+              data: formattedData,
               borderColor: '#2563eb',
               backgroundColor: 'rgba(37, 99, 235, 0.1)',
               borderWidth: 2,
@@ -82,7 +160,7 @@ const LineChart = ({ historicalData }) => {
           ],
         });
       } else {
-        const candlestickData = formatCandlestickData(historicalData);
+        const candlestickData = formatCandlestickData({ prices: filteredData });
         setChartData({
           datasets: [
             {
@@ -94,12 +172,12 @@ const LineChart = ({ historicalData }) => {
               borderSkipped: false,
               candleWidth: 0.6,
               barPercentage: 0.8
-          },
-        ],
-      });
+            },
+          ],
+        });
+      }
     }
-    }
-  }, [historicalData, chartType]);
+  }, [historicalData, chartType, timeRange]);
 
   const options = {
     responsive: true,
@@ -108,13 +186,13 @@ const LineChart = ({ historicalData }) => {
       padding: {
         left: 20,
         right: 20,
-        top: 10,  // Reduced top padding since we don't have title
+        top: 10,
         bottom: 20
       }
     },
     plugins: {
       legend: {
-        display: false,  // Hide legend since we have buttons
+        display: false,
       },
       tooltip: {
         mode: 'index',
@@ -128,8 +206,8 @@ const LineChart = ({ historicalData }) => {
         callbacks: {
           title: (tooltipItems) => {
             if (tooltipItems[0]) {
-              const date = new Date(tooltipItems[0].raw.x || tooltipItems[0].label);
-              return format(date, 'MMM d, yyyy');
+              const date = new Date(tooltipItems[0].parsed.x);
+              return format(date, 'MMM d, yyyy HH:mm');
             }
             return '';
           },
@@ -137,13 +215,13 @@ const LineChart = ({ historicalData }) => {
             if (chartType !== ChartTypes.LINE) {
               const item = context.raw;
               return [
-                `Open: $${item.o.toFixed(2)}`,
-                `High: $${item.h.toFixed(2)}`,
-                `Low: $${item.l.toFixed(2)}`,
-                `Close: $${item.c.toFixed(2)}`
+                `Open: ${currency.symbol}${item.o.toFixed(2)}`,
+                `High: ${currency.symbol}${item.h.toFixed(2)}`,
+                `Low: ${currency.symbol}${item.l.toFixed(2)}`,
+                `Close: ${currency.symbol}${item.c.toFixed(2)}`
               ];
             }
-            return `$${context.raw.toFixed(2)}`;
+            return `${currency.symbol}${context.parsed.y.toFixed(2)}`;
           }
         },
         bodyFont: {
@@ -156,10 +234,24 @@ const LineChart = ({ historicalData }) => {
           weight: '600',
         },
       },
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+            modifierKey: 'ctrl',
+          },
+          pinch: {
+            enabled: true,
+          },
+        },
+        pan: {
+          enabled: true,
+        },
+      },
     },
     scales: {
       x: {
-        type: chartType === ChartTypes.LINE ? 'category' : 'time',
+        type: 'time',
         grid: {
           display: false,
         },
@@ -172,20 +264,24 @@ const LineChart = ({ historicalData }) => {
           autoSkip: true,
           maxTicksLimit: 10,
           callback: function(value) {
-            const date = chartType === ChartTypes.LINE 
-              ? new Date(historicalData.prices[value]?.[0]) 
-              : new Date(value);
-            return format(date, 'MMM d');
+            return format(new Date(value), 'MMM d');
           }
         },
         time: {
-          unit: 'day',
+          unit: timeRange === TimeRanges.DAY ? 'hour' : 'day',
           displayFormats: {
+            hour: 'HH:mm',
             day: 'MMM d'
+          }
+        },
+        adapters: {
+          date: {
+            zone: 'UTC'
           }
         }
       },
       y: {
+        type: 'linear',
         grid: {
           color: '#f3f4f6',
         },
@@ -196,7 +292,10 @@ const LineChart = ({ historicalData }) => {
             family: "'Inter', sans-serif",
           },
           callback: function(value) {
-            return '$' + value.toLocaleString();
+            return currency.symbol + value.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            });
           }
         },
       },
@@ -220,18 +319,31 @@ const LineChart = ({ historicalData }) => {
     <div className="chart-container">
       <div className="chart-controls-wrapper">
         <div className="chart-controls">
-          <button
-            className={`chart-button ${chartType === ChartTypes.LINE ? 'active' : ''}`}
-            onClick={() => setChartType(ChartTypes.LINE)}
-          >
-            <span className="button-text">Line</span>
-          </button>
-          <button
-            className={`chart-button ${chartType === ChartTypes.CANDLESTICK ? 'active' : ''}`}
-            onClick={() => setChartType(ChartTypes.CANDLESTICK)}
-          >
-            <span className="button-text">Candlestick</span>
-          </button>
+          <div className="chart-type-controls">
+            <button
+              className={`chart-button ${chartType === ChartTypes.LINE ? 'active' : ''}`}
+              onClick={() => setChartType(ChartTypes.LINE)}
+            >
+              <span className="button-text">Line</span>
+            </button>
+            <button
+              className={`chart-button ${chartType === ChartTypes.CANDLESTICK ? 'active' : ''}`}
+              onClick={() => setChartType(ChartTypes.CANDLESTICK)}
+            >
+              <span className="button-text">Candlestick</span>
+            </button>
+          </div>
+          <div className="time-range-controls">
+            {Object.values(TimeRanges).map(range => (
+              <button
+                key={range}
+                className={`time-range-button ${timeRange === range ? 'active' : ''}`}
+                onClick={() => handleTimeRangeChange(range)}
+              >
+                <span className="button-text">{range}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <div className="chart-wrapper">

@@ -5,6 +5,7 @@ import Home from './pages/Home/Home'
 import Coin from './pages/Coin/Coin'
 import Footer from './components/Footer/Footer'
 import { AnalyticsProvider } from './providers/AnalyticsProvider'
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path='/coin/:coinId' element={<Coin/>}/>
         </Routes>
         <Footer />
+        <SpeedInsights />
       </div>
     </AnalyticsProvider>
   )

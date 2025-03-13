@@ -2,11 +2,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 8%;
-    margin: auto;
+    padding: 0.75rem 5%;
     background-color: #FFFFFF;
-    color: #2563EB;
-    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar .logo a {
@@ -14,97 +15,110 @@
     align-items: center;
     text-decoration: none;
     color: #2563EB;
-    font-weight: bold;
-    font-size: 40px;
-    gap: 10px;
+    font-weight: 600;
+    font-size: 1.75rem;
+    gap: 0.75rem;
+    transition: color 0.2s ease;
+}
+
+.navbar .logo a:hover {
+    color: #1d4ed8;
 }
 
 .navbar .logo img {
-    width: 60px;
-    height: 60px;
-    
+    width: 2.75rem;
+    height: 2.75rem;
+    object-fit: contain;
 }
 
 /* Desktop Menu */
 .navbar ul {
     display: flex;
-    gap: 30px;
+    gap: 1.5rem;
     list-style: none;
     margin: 0;
     padding: 0;
-    font-size: 25px;
+    font-size: 1rem;
     margin-left: auto;
-    margin-right: 15px;
+    margin-right: 1.5rem;
 }
 
 .navbar ul li {
     cursor: pointer;
-    transition: color 0.3s ease;
-    border-radius: 6px;
-    border: 1px solid #2563EB;
-    padding: 5px 10px;
+    transition: all 0.2s ease;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: #4b5563;
 }
 
 .navbar ul li:hover {
-    background-color: #2563EB;
-    color: #FFFFFF;
-    border: 1px solid #2563EB;
+    background-color: #f3f4f6;
+    color: #2563EB;
 }
 
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 1rem;
 }
 
 .nav-right select {
-    padding: 5px 10px;
-    border-radius: 6px;
-    border: 1px solid #2563EB;
+    padding: 0.625rem 2.75rem 0.625rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
     background: #fff;
-    color: #2563EB;
-    font-size: 25px;
+    color: #4b5563;
+    font-size: 0.9375rem;
     cursor: pointer;
     appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234b5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25rem;
+    transition: all 0.2s ease;
+    min-width: 100px;
 }
-
-.nav-right select option {
-    background-color: #FFFFFF;
-    color: #2563EB;
-    cursor: pointer;
-}
-
 
 .nav-right select:hover {
-    background-color: #2563EB;
-    color: #FFFFFF;
-    border: 1px solid #2563EB;
+    border-color: #2563EB;
+    color: #2563EB;
+}
+
+.nav-right select:focus {
+    outline: none;
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .nav-right button {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 25px;
-    font-weight: bold;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
     color: #FFFFFF;
     background: #2563EB;
     border: none;
     cursor: pointer;
-
-
+    transition: all 0.2s ease;
+    min-width: 120px;
+    justify-content: center;
 }
 
 .nav-right button:hover {
-    background-color: #FFFFFF;
-    color: #2563EB;
-    border: 1px solid #2563EB;
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.nav-right button:active {
+    transform: translateY(0);
 }
 
 .nav-right button img {
-    width: 14px;
+    width: 1.125rem;
     height: auto;
 }
 
@@ -113,40 +127,61 @@
     display: none;
     background: none;
     border: none;
-    padding: 0;
+    padding: 0.5rem;
     cursor: pointer;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+}
+
+.menu-toggle:hover {
+    background-color: #f3f4f6;
 }
 
 .menu-toggle span {
     display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #2563EB;
-    margin: 5px 0;
+    width: 1.5rem;
+    height: 2px;
+    background-color: #4b5563;
+    margin: 4px 0;
     transition: all 0.3s ease;
+    border-radius: 2px;
 }
 
 /* Coming Soon Message */
 .coming-soon-message {
     position: fixed;
-    bottom: 20px;
+    bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #eb2525;
+    background-color: #ef4444;
     color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 20px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
     z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 5%;
+        padding: 0.75rem 5%;
         position: relative;
+        background-color: #FFFFFF;
+        height: 4.5rem; /* Fixed height for navbar */
     }
 
     .navbar .logo {
@@ -157,16 +192,26 @@
     }
 
     .navbar .logo a {
-        font-size: 30px;
+        font-size: 1.5rem;
     }
 
     .navbar .logo img {
-        width: 50px;
-        height: 50px;
+        width: 2.25rem;
+        height: 2.25rem;
     }
 
     .menu-toggle {
         display: block;
+        padding: 0.5rem;
+        margin-right: -0.5rem;
+    }
+
+    .menu-toggle span {
+        width: 1.75rem;
+        height: 2px;
+        margin: 5px 0;
+        background-color: #4b5563;
+        border-radius: 2px;
     }
 
     .menu-toggle.active span:nth-child(1) {
@@ -178,12 +223,31 @@
     }
 
     .menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
+        transform: rotate(-45deg) translate(5px, -5px);
     }
 
     .nav-menu {
         display: none;
         width: 100%;
+        position: fixed;
+        top: 4.5rem; /* Match navbar height */
+        left: 0;
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
     .nav-menu.active {
@@ -193,47 +257,93 @@
     .navbar ul {
         flex-direction: column;
         width: 100%;
-        gap: 10px;
-        margin: 15px 0;
-        font-size: 20px;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
     }
 
     .navbar ul li {
-        text-align: center;
-        padding: 12px;
-        margin: 5px 0;
-        border: 1px solid #2563EB;
-        border-radius: 6px;
+        text-align: left;
+        padding: 0.875rem 1rem;
         width: 100%;
         box-sizing: border-box;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        color: #4b5563;
+        transition: all 0.2s ease;
+    }
+
+    .navbar ul li:hover {
+        background-color: #f3f4f6;
+        color: #2563EB;
     }
 
     .nav-right {
         flex-direction: column;
         width: 100%;
-        gap: 10px;
-        margin-top: 10px;
+        gap: 1rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
     }
 
     .nav-right select {
-        width: 20%;
-        font-size: 18px;
-        padding: 12px;
-        margin: 5px 0;
-        box-sizing: border-box;
+        width: 100%;
+        padding: 0.75rem 2.5rem 0.75rem 1rem;
+        font-size: 0.9375rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        background-color: #f9fafb;
+        color: #4b5563;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234b5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1rem;
+        height: 3rem; /* Fixed height for select */
+    }
+
+    .nav-right select:focus {
+        outline: none;
+        border-color: #2563EB;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
     .nav-right button {
         width: 100%;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9375rem;
+        border-radius: 0.5rem;
+        background-color: #2563EB;
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
         justify-content: center;
-        font-size: 18px;
-        padding: 12px 20px;
-        margin: 5px 0;
-        box-sizing: border-box;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+        height: 3rem; /* Fixed height for button */
+    }
+
+    .nav-right button:hover {
+        background-color: #1d4ed8;
+        transform: translateY(-1px);
+    }
+
+    .nav-right button:active {
+        transform: translateY(0);
+    }
+
+    .nav-right button img {
+        width: 1.125rem;
+        height: auto;
     }
 
     .coming-soon-message {
-        font-size: 20px;
-        padding: 8px 16px;
+        bottom: 2rem;
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+        border-radius: 9999px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 }

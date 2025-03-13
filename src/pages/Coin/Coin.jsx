@@ -38,16 +38,22 @@ const Coin = () => {
     }
   };
 
-  const fetchHistoricalData = async () => {
+  const fetchHistoricalData = async (days = 365) => {
     const options = {
       method: 'GET',
       headers: { accept: 'application/json', 'x-cg-demo-api-key': apiKey },
     };
 
-    fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=10`, options)
-      .then(res => res.json())
-      .then(res => setHistoricalData(res))
-      .catch(err => console.error(err));
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=${days}`,
+        options
+      );
+      const data = await response.json();
+      setHistoricalData(data);
+    } catch (error) {
+      console.error('Error fetching historical data:', error);
+    }
   };
   
   
@@ -55,8 +61,8 @@ const Coin = () => {
 
   useEffect(() => {
     fetchCoinData();
-    fetchHistoricalData();
-  }, [currency]);
+    fetchHistoricalData(365); // Fetch 1 year of data by default
+  }, [currency, coinId]);
 
   if (!coinData || !historicalData) {
     return (
@@ -143,8 +149,11 @@ const Coin = () => {
 
       {/* Chart Section */}
       <div className="coin-chart">
-      <p className="chart-title">Last 10 Days Price Trend – {coinData.name}</p>
-        <LineChart historicalData={historicalData} />
+        <p className="chart-title">Price Trend – {coinData.name}</p>
+        <LineChart 
+          historicalData={historicalData} 
+          onTimeRangeChange={(days) => fetchHistoricalData(days)}
+        />
       </div>
 
 
