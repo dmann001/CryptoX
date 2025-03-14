@@ -7,14 +7,14 @@ import Footer from './components/Footer/Footer'
 import { AnalyticsProvider } from './providers/AnalyticsProvider'
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { BrowserRouter } from 'react-router-dom'
-import { CoinProvider } from './providers/CoinProvider'
+import CoinContextProvider from './context/CoinContext'
 
 const App = () => {
   return (
     <AnalyticsProvider>
       <div className='app'>
         <BrowserRouter>
-          <CoinProvider>
+          <CoinContextProvider>
             <Navbar />
             <Routes>
               <Route path='/' element={<Home/>}/>
@@ -22,7 +22,7 @@ const App = () => {
             </Routes>
             <Footer />
             <SpeedInsights />
-          </CoinProvider>
+          </CoinContextProvider>
         </BrowserRouter>
       </div>
     </AnalyticsProvider>
