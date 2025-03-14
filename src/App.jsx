@@ -6,18 +6,24 @@ import Coin from './pages/Coin/Coin'
 import Footer from './components/Footer/Footer'
 import { AnalyticsProvider } from './providers/AnalyticsProvider'
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { BrowserRouter } from 'react-router-dom'
+import { CoinProvider } from './providers/CoinProvider'
 
 const App = () => {
   return (
     <AnalyticsProvider>
       <div className='app'>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/coin/:coinId' element={<Coin/>}/>
-        </Routes>
-        <Footer />
-        <SpeedInsights />
+        <BrowserRouter>
+          <CoinProvider>
+            <Navbar />
+            <Routes>
+              <Route path='/' element={<Home/>}/>
+              <Route path='/coin/:coinId' element={<Coin/>}/>
+            </Routes>
+            <Footer />
+            <SpeedInsights />
+          </CoinProvider>
+        </BrowserRouter>
       </div>
     </AnalyticsProvider>
   )
