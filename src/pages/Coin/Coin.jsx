@@ -26,11 +26,18 @@ const Coin = () => {
   const fetchCoinData = async () => {
     const options = {
       method: 'GET',
-      headers: { accept: 'application/json', 'x-cg-demo-api-key': apiKey },
+      headers: {
+        'accept': 'application/json',
+        'x-cg-demo-api-key': apiKey,
+        'Content-Type': 'application/json'
+      }
     };
 
     try {
-      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`, options);
+      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}?x_cg_demo_api_key=${apiKey}`, options);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       setCoinData(data);
     } catch (error) {
@@ -41,14 +48,21 @@ const Coin = () => {
   const fetchHistoricalData = async (days = 365) => {
     const options = {
       method: 'GET',
-      headers: { accept: 'application/json', 'x-cg-demo-api-key': apiKey },
+      headers: {
+        'accept': 'application/json',
+        'x-cg-demo-api-key': apiKey,
+        'Content-Type': 'application/json'
+      }
     };
 
     try {
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=${days}`,
+        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=${days}&x_cg_demo_api_key=${apiKey}`,
         options
       );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       setHistoricalData(data);
     } catch (error) {
@@ -60,9 +74,11 @@ const Coin = () => {
   
 
   useEffect(() => {
-    fetchCoinData();
-    fetchHistoricalData(365); // Fetch 1 year of data by default
-  }, [currency, coinId]);
+    if (apiKey) {
+      fetchCoinData();
+      fetchHistoricalData(365); // Fetch 1 year of data by default
+    }
+  }, [currency, coinId, apiKey]);
 
   if (!coinData || !historicalData) {
     return (

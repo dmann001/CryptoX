@@ -16,18 +16,19 @@ const CoinContextProvider = ({ children }) => {
       const options = {
         method: "GET",
         headers: {
-          accept: "application/json",
-          "x-cg-demo-api-key": apiKey,
-        },
+          'accept': 'application/json',
+          'x-cg-demo-api-key': apiKey,
+          'Content-Type': 'application/json'
+        }
       };
 
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}&per_page=250`,
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.name}&per_page=250&x_cg_demo_api_key=${apiKey}`,
         options
       );
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -38,14 +39,10 @@ const CoinContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    let isMounted = true;
-
-    fetchAllCoin();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [currency]);
+    if (apiKey) {
+      fetchAllCoin();
+    }
+  }, [currency, apiKey]);
 
   const contextValue = {
     allCoin,
