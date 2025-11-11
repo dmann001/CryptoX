@@ -57,6 +57,7 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
   const [chartData, setChartData] = useState(null);
   const [chartType, setChartType] = useState(ChartTypes.LINE);
   const [timeRange, setTimeRange] = useState(TimeRanges.DAY);
+  const [chartRef, setChartRef] = useState(null);
   const { currency } = useContext(CoinContext);
 
   const getDaysFromRange = (range) => {
@@ -117,16 +118,33 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
     return data.prices.filter(item => item[0] >= startTimestamp);
   };
 
-  // Function to format OHLC data
+  // Function to format OHLC data with better variation
   const formatCandlestickData = (data) => {
     if (!data?.prices) return null;
-    return data.prices.map(item => ({
-      x: item[0],
-      o: item[1] * 0.99,
-      h: item[1] * 1.02,
-      l: item[1] * 0.98,
-      c: item[1]
-    }));
+
+    return data.prices.map((item, index) => {
+      const price = item[1];
+      const prevPrice = index > 0 ? data.prices[index - 1][1] : price;
+      const nextPrice = index < data.prices.length - 1 ? data.prices[index + 1][1] : price;
+
+      // Calculate realistic OHLC values based on price trend
+      const avgPrice = (prevPrice + price + nextPrice) / 3;
+      const volatility = Math.abs(price - avgPrice) / avgPrice;
+      const spread = Math.max(volatility * 2, 0.01); // At least 1% spread
+
+      const open = prevPrice;
+      const close = price;
+      const high = Math.max(open, close) * (1 + spread);
+      const low = Math.min(open, close) * (1 - spread);
+
+      return {
+        x: item[0],
+        o: open,
+        h: high,
+        l: low,
+        c: close
+      };
+    });
   };
 
   useEffect(() => {
@@ -164,14 +182,19 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
         setChartData({
           datasets: [
             {
-              label: 'Candlestick',
+              label: 'Price',
               data: candlestickData,
-              borderColor: ctx => (ctx.parsed && ctx.parsed.c >= ctx.parsed.o ? '#22c55e' : '#ef4444'),
-              backgroundColor: ctx => (ctx.parsed && ctx.parsed.c >= ctx.parsed.o ? 'rgba(34, 197, 94, 0.6)' : 'rgba(239, 68, 68, 0.6)'),
-              borderWidth: 2,
-              borderSkipped: false,
-              candleWidth: 0.6,
-              barPercentage: 0.8
+              color: {
+                up: '#22c55e',
+                down: '#ef4444',
+                unchanged: '#9ca3af',
+              },
+              borderColor: {
+                up: '#16a34a',
+                down: '#dc2626',
+                unchanged: '#6b7280',
+              },
+              borderWidth: 1.5,
             },
           ],
         });
@@ -184,10 +207,10 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
     maintainAspectRatio: false,
     layout: {
       padding: {
-        left: 20,
-        right: 20,
+        left: 10,
+        right: 10,
         top: 10,
-        bottom: 20
+        bottom: 10
       }
     },
     plugins: {
@@ -195,6 +218,7 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
         display: false,
       },
       tooltip: {
+        enabled: true,
         mode: 'index',
         intersect: false,
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -203,6 +227,7 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
         borderColor: '#e5e7eb',
         borderWidth: 1,
         padding: 12,
+        displayColors: false,
         callbacks: {
           title: (tooltipItems) => {
             if (tooltipItems[0]) {
@@ -221,31 +246,38 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
                 `Close: ${currency.symbol}${item.c.toFixed(2)}`
               ];
             }
-            return `${currency.symbol}${context.parsed.y.toFixed(2)}`;
+            return `Price: ${currency.symbol}${context.parsed.y.toFixed(2)}`;
           }
         },
         bodyFont: {
-          size: 14,
+          size: 13,
           family: "'Inter', sans-serif",
         },
         titleFont: {
-          size: 14,
+          size: 13,
           family: "'Inter', sans-serif",
           weight: '600',
         },
       },
       zoom: {
+        limits: {
+          x: {min: 'original', max: 'original'},
+          y: {min: 'original', max: 'original'}
+        },
         zoom: {
           wheel: {
             enabled: true,
-            modifierKey: 'ctrl',
+            speed: 0.1,
           },
           pinch: {
             enabled: true,
           },
+          mode: 'x',
         },
         pan: {
           enabled: true,
+          mode: 'x',
+          modifierKey: null,
         },
       },
     },
@@ -253,19 +285,22 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
       x: {
         type: 'time',
         grid: {
-          display: false,
+          display: true,
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false,
+        },
+        border: {
+          display: false
         },
         ticks: {
           font: {
-            size: 12,
+            size: 11,
             family: "'Inter', sans-serif",
           },
+          color: '#6b7280',
           maxRotation: 0,
           autoSkip: true,
-          maxTicksLimit: 10,
-          callback: function(value) {
-            return format(new Date(value), 'MMM d');
-          }
+          maxTicksLimit: window.innerWidth < 768 ? 6 : 10,
         },
         time: {
           unit: timeRange === TimeRanges.DAY ? 'hour' : 'day',
@@ -283,17 +318,28 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
       y: {
         type: 'linear',
         grid: {
-          color: '#f3f4f6',
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false,
+        },
+        border: {
+          display: false
         },
         position: 'right',
         ticks: {
           font: {
-            size: 12,
+            size: 11,
             family: "'Inter', sans-serif",
           },
+          color: '#6b7280',
+          maxTicksLimit: 8,
           callback: function(value) {
+            if (value >= 1000000) {
+              return currency.symbol + (value / 1000000).toFixed(1) + 'M';
+            } else if (value >= 1000) {
+              return currency.symbol + (value / 1000).toFixed(1) + 'K';
+            }
             return currency.symbol + value.toLocaleString(undefined, {
-              minimumFractionDigits: 2,
+              minimumFractionDigits: 0,
               maximumFractionDigits: 2
             });
           }
@@ -301,18 +347,24 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
       },
     },
     interaction: {
-      mode: 'nearest',
+      mode: 'index',
       axis: 'x',
       intersect: false,
     },
   };
 
-  const renderChart = () => {
-    if (!chartData) return <p>Loading chart...</p>;
+  const handleResetZoom = () => {
+    if (chartRef) {
+      chartRef.resetZoom();
+    }
+  };
 
-    return chartType === ChartTypes.CANDLESTICK 
-      ? <Chart type="candlestick" data={chartData} options={options} />
-      : <Line data={chartData} options={options} />;
+  const renderChart = () => {
+    if (!chartData) return <p className="loading-text">Loading chart...</p>;
+
+    return chartType === ChartTypes.CANDLESTICK
+      ? <Chart ref={setChartRef} type="candlestick" data={chartData} options={options} />
+      : <Line ref={setChartRef} data={chartData} options={options} />;
   };
 
   return (
@@ -323,14 +375,23 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
             <button
               className={`chart-button ${chartType === ChartTypes.LINE ? 'active' : ''}`}
               onClick={() => setChartType(ChartTypes.LINE)}
+              aria-label="Switch to line chart"
             >
               <span className="button-text">Line</span>
             </button>
             <button
               className={`chart-button ${chartType === ChartTypes.CANDLESTICK ? 'active' : ''}`}
               onClick={() => setChartType(ChartTypes.CANDLESTICK)}
+              aria-label="Switch to candlestick chart"
             >
               <span className="button-text">Candlestick</span>
+            </button>
+            <button
+              className="chart-button reset-zoom"
+              onClick={handleResetZoom}
+              aria-label="Reset zoom"
+            >
+              <span className="button-text">Reset Zoom</span>
             </button>
           </div>
           <div className="time-range-controls">
@@ -339,6 +400,7 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
                 key={range}
                 className={`time-range-button ${timeRange === range ? 'active' : ''}`}
                 onClick={() => handleTimeRangeChange(range)}
+                aria-label={`Show ${range} data`}
               >
                 <span className="button-text">{range}</span>
               </button>
@@ -348,6 +410,9 @@ const LineChart = ({ historicalData, onTimeRangeChange }) => {
       </div>
       <div className="chart-wrapper">
         {renderChart()}
+      </div>
+      <div className="chart-help-text">
+        <p>💡 Desktop: Ctrl+Scroll to zoom, Click and drag to pan | Mobile: Pinch to zoom, Swipe to pan</p>
       </div>
     </div>
   );

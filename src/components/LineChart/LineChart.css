@@ -2,11 +2,13 @@
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  padding: 32px;
+  padding: 24px;
   margin: 24px 0;
   min-height: 600px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
 .chart-title {
@@ -101,6 +103,51 @@
   width: 100%;
   min-height: 400px;
   position: relative;
+  touch-action: pan-y;
+}
+
+.chart-wrapper canvas {
+  max-width: 100% !important;
+  height: auto !important;
+  cursor: grab;
+}
+
+.chart-wrapper canvas:active {
+  cursor: grabbing;
+}
+
+.loading-text {
+  text-align: center;
+  color: #6b7280;
+  font-size: 16px;
+  padding: 40px;
+  font-family: 'Inter', sans-serif;
+}
+
+.chart-help-text {
+  text-align: center;
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.chart-help-text p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+}
+
+.reset-zoom {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+}
+
+.reset-zoom:hover {
+  background-color: #e5e7eb !important;
+  border-color: #9ca3af !important;
 }
 
 @media (max-width: 1024px) {
@@ -138,21 +185,73 @@
   .time-range-controls,
   .scale-controls {
     gap: 8px;
+    flex-wrap: wrap;
   }
 
   .chart-button,
   .time-range-button,
   .scale-button {
-    min-width: 80px;
-    padding: 8px 16px;
+    min-width: 70px;
+    padding: 8px 12px;
+    flex: 0 1 auto;
   }
 
   .button-text {
-    font-size: 12px;
-    letter-spacing: 0.5px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+
+  .chart-wrapper {
+    min-height: 350px;
+  }
+
+  .chart-help-text {
+    padding: 10px;
+    margin-top: 12px;
+  }
+
+  .chart-help-text p {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-container {
+    padding: 12px;
+    min-height: 450px;
+  }
+
+  .chart-controls-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .chart-controls {
+    gap: 10px;
+  }
+
+  .chart-type-controls,
+  .time-range-controls {
+    gap: 6px;
+  }
+
+  .chart-button,
+  .time-range-button,
+  .scale-button {
+    min-width: 60px;
+    padding: 6px 10px;
+  }
+
+  .button-text {
+    font-size: 10px;
+    letter-spacing: 0.2px;
   }
 
   .chart-wrapper {
     min-height: 300px;
+  }
+
+  .chart-help-text p {
+    font-size: 10px;
+    line-height: 1.4;
   }
 }
